@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>SAMIL - Sign up / Login Form</title>
-	<link rel="stylesheet" href="./style_main.css">
+	<link rel="stylesheet" th:href="@{/singUp.css}">
 
 </head>
 
@@ -24,15 +24,15 @@
 			<input type="checkbox" id="chk" aria-hidden="true">
 
 			<div class="signup">
-				<form>
+				<form action="#" th:action="@{/requestSingUp}" th:object="${registerForm}" method="post" >
 					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="User name" required="">
-					<input type="email" name="email" placeholder="Email" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<input type="password" name="pswd" placeholder="Confirm Password" required="">
-					<input type="text" name="txt" placeholder="System ID" required="">
-					<button>Sign up
-						<link rel="stylesheet" href="./index_landing_page.html">
+					<input type="text" name="txt" placeholder="User name" th:field="*{userName}" required="">
+					<input type="email" name="email" placeholder="Email" th:field="*{email}" required="">
+					<input type="password" name="pswd" placeholder="Password" th:field="*{password}" required="">
+					<input type="password" name="pswd" placeholder="Confirm Password" th:field="*{confirmPassword}" required="">
+					<input type="text" name="txt" placeholder="System ID" th:field="*{systemID}" required="">
+					<button type="submit">Sign up
+
 					</button>
 				</form>
 			</div>
