@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>SAMIL - Landing Page</title>
-  <link rel="stylesheet" href="./style_landing_page.css">
+  <title>Home Page</title>
+  <link rel="stylesheet" th:href="@{/home.css}">
 
 </head>
 
@@ -25,11 +25,12 @@
     <nav>
       <div class="navbar">
         <ul>
-          <li><button onclick="window.location.href = './index_landing_page.html';">Home</button></li>
-          <li><button onclick="window.location.href = './index_landing_page.html';">My System</button></li>
-          <li><button onclick="window.location.href = './index_about_page.html';">About</button></li>
-          <li><button onclick="window.location.href = './index_contact_page.html';">Contact</button></li>
-          <li><button onclick="window.location.href = './index_main.html';">Log out</button></li>
+          <li><a th:href="@{/home}"><button >Home</button></a></li>
+          <li><a th:href="@{/viewSystems}"><button>My System</button></a></li>
+          <li><a th:href="@{/viewProfile}"><button>My Profile</button></a></li>
+          <li><a th:href="@{/about}"><button>About</button></a></li>
+          <li><a th:href="@{/contact}"><button>Contact</button></a></li>
+          <li><a th:href="@{/logOff}"><button >Log out</button></a></li>
 
         </ul>
       </div>

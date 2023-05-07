@@ -3,8 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>SAMIL - Sign up / Login Form</title>
-	<link rel="stylesheet" th:href="@{static/singUp.css}">
+	<title>Sign up / Login Form</title>
+	<link rel="stylesheet" th:href="@{/singUp.css}">
 
 </head>
 
@@ -32,18 +32,17 @@
 					<input type="password" name="pswd" placeholder="Confirm Password" th:field="*{confirmPassword}"
 						required="">
 					<input type="text" name="txt" placeholder="System ID" th:field="*{systemID}" required="">
-					<button type="submit" onclick="window.location.href = 'dist/index_landing_page.html'">Sign up
+					<button type="submit" name="singUp">Sign up
 					</button>
 				</form>
 			</div>
 
 			<div class="login">
-				<form>
+				<form action="#" th:action="@{/requestLogin}" th:object="${loginForm}" method="post" >
 					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Login
-						<link rel="stylesheet" href="./index_landing_page.html">
+					<input type="email" name="email" placeholder="Email" th:field="*{mail}"  required="">
+					<input type="password" name="pswd" placeholder="Password" th:field="*{password}" required="">
+					<button type="submit" name="Login">Login
 					</button>
 				</form>
 			</div>

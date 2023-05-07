@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>View Your Profile</title>
+    <link rel="stylesheet" th:href="@{/viewProfile.css}">
+
+</head>
+
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=IBM Plex Sans" rel="stylesheet"/>
+    <title>Profile Page</title>
+</head>
+
+<body>
+<nav>
+    <div class="navbar">
+        <ul>
+            <li><a th:href="@{/home}">
+                <button>Home</button>
+            </a></li>
+            <li><a th:href="@{/viewSystems}">
+                <button>My System</button>
+            </a></li>
+            <li><a th:href="@{/about}">
+                <button>About</button>
+            </a></li>
+            <li><a th:href="@{/logOff}">
+                <button>Log out</button>
+            </a></li>
+        </ul>
+    </div>
+</nav>
+<section>
+    <div class="title"> Your account information
+    </div>
+
+</section>
+    <table align="center">
+        <tr>
+            <td bgcolor="white" align="center">Username:</td>
+            <td bgcolor="white" align="center" ><p  th:text="${currentUser.getUsername()}"></td>
+        </tr>
+        <tr>
+            <td bgcolor="white" align="center">Email:</td>
+            <td bgcolor="white" align="center"><p  th:text="${currentUser.getEmail()}"></td>
+        </tr>
+        <tr>
+            <td bgcolor="white" align="center">Number of Systems:</td>
+            <td bgcolor="white" align="center"><p th:text="${currentUser.getSystemsModelList().size()}"></td>
+        </tr>
+    </table>
+</body>
+
+</html>
+<!-- partial -->
+
+</body>
+
+</html>

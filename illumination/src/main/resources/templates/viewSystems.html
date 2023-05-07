@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>View Your Profile</title>
+    <link rel="stylesheet" th:href="@{/viewSystems.css}">
+
+</head>
+
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=IBM Plex Sans" rel="stylesheet"/>
+    <title>Your Systems Page</title>
+</head>
+
+<body>
+<nav>
+    <div class="navbar">
+        <ul>
+            <li><a th:href="@{/home}">
+                <button>Home</button>
+            </a></li>
+            <li><a th:href="@{/viewProfile}">
+                <button>My Profile</button>
+            </a></li>
+            <li><a th:href="@{/about}">
+                <button>About</button>
+            </a></li>
+            <li><a th:href="@{/logOff}">
+                <button>Log out</button>
+            </a></li>
+        </ul>
+    </div>
+</nav>
+<section>
+    <div class="title"> Here you can see your current systems
+    </div>
+
+</section>
+
+
+</body>
+<table align="center">
+    <th>
+        <tr>
+            <th bgcolor="white" align="center">Your registered systems</th>
+        </tr>
+    </th>
+    <tbody>
+    <tr th:each="item :${currentUser.getSystemsModelList()}">
+        <td bgcolor="white">System ID:</td>
+        <td th:text="${item.getId()}" bgcolor="white"></td>
+        <td>
+            <a th:href="@{/selectedSystem(id=${item.getId()})}"><button  >Go to system</button></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p>
+
+
+</p>
+<div align="center">
+    <form action="#" th:action="@{/addNewSystem}" th:object="${systemForm}" method="post">
+        <label aria-hidden="true"> Add a new System</label>
+        <input type="text" name="text" placeholder="System ID" th:field="*{id}" required="">
+        <input type="submit" value="Add new system">
+    </form>
+</div>
+</html>
+<!-- partial -->
+</body>
+
+</html>
