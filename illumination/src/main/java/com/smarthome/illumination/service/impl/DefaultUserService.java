@@ -46,7 +46,7 @@ public class DefaultUserService implements UserService {
         try {
             userDAO.saveUser(userModel);
         } catch (UserAlreadyAvailableException e) {
-            throw new UserAvailableServiceException("User exists!");
+            throw new UserAvailableServiceException("User already exists!");
         }
     }
 
@@ -101,13 +101,18 @@ public class DefaultUserService implements UserService {
 
     @Override
     public UserData verifyUserFromLogin(String mail, String password)
-            throws InvalidKeySpecException, NoSuchAlgorithmException {
+            throws InvalidKeySpecException, NoSuchAlgorithmException, UserNotAvailableServiceException {
         UserModel userModel = userDAO.getUserForLogin(mail);
         UserData userData = null;
-
-        if (encryptPasswordFromLogin(password, userModel.getHash()).equals(userModel.getPassword())) {
-            userData = getUserDataFromUserModel(userModel);
-        }
+       try {
+           if (encryptPasswordFromLogin(password, userModel.getHash()).equals(userModel.getPassword())) {
+               userData = getUserDataFromUserModel(userModel);
+           }else{
+               throw new UserNotAvailableServiceException("The credentials does not match!");
+           }
+       }catch (NullPointerException exception){
+           throw  new UserNotAvailableServiceException("User doesn't exist!");
+       }
         return userData;
     }
 }

@@ -1,7 +1,9 @@
 package com.smarthome.illumination.facade.impl;
 
 import com.smarthome.illumination.exception.FacadeException;
+import com.smarthome.illumination.exception.SystemNotAvailableException;
 import com.smarthome.illumination.exception.SystemRegisteredServiceException;
+import com.smarthome.illumination.exception.SystemServiceException;
 import com.smarthome.illumination.facade.SystemsFacade;
 import com.smarthome.illumination.facade.data.SystemsData;
 import com.smarthome.illumination.facade.data.UserData;
@@ -25,12 +27,21 @@ public class DefaultSystemFacade implements SystemsFacade {
         try {
             systemsService.addSystem(systemId, userModel);
         } catch (SystemRegisteredServiceException e) {
-            throw new FacadeException("System already registered!");
+            throw new FacadeException(e.getMessage());
         }
     }
 
     @Override
-    public SystemsData getSystemOfUser(int id) throws ParseException {
-        return systemsService.getSystem(id);
+    public SystemsData getSystemOfUser(int id) throws ParseException, SystemNotAvailableException, SystemServiceException {
+        try {
+            return systemsService.getSystem(id);
+        }catch (SystemServiceException exception){
+            throw new FacadeException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public void setPowerStatus(int systemID,String status) {
+       systemsService.setPowerStatusForChosenSystem(systemID,status);
     }
 }

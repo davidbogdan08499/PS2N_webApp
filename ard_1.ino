@@ -1,70 +1,68 @@
-// #include <TimerFreeTone.h>
-// #include <LiquidCrystal.h>
-// #include <VirtualWire.h>
-// #include <VirtualWire_Config.h>
+#include <TimerFreeTone.h>
+#include <LiquidCrystal.h>
+#include <VirtualWire.h>
+#include <VirtualWire_Config.h>
 
 
 // LiquidCrystal lcd(7,6,5,4,3,2);
 
-// int ok=0;
-// int nr_timer=0,nr_state=0;
-// bool state=0,check_status=0;
-// int i,nr_led=0;
+int ok=0;
+int nr_timer=0,nr_state=0;
+bool state=0,check_status=0;
+int i,nr_led=0;
 
-// void adc_init_light_sensor() //adc initialization for light sensor
-// {
-// ADCSRA |= ((1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0));
-// //selectam divizor de frecventa(prescalar) de 128
-// ADMUX |= (1<<REFS0); //aleferea tensiunii de ref
-// ADCSRA |= (1<<ADEN); //activare ADC
-// ADCSRA |= (1<<ADSC); //declansare start conversie
-// }
+void adc_init_light_sensor() //adc initialization for light sensor
+{
+ADCSRA |= ((1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0));
+//selectam divizor de frecventa(prescalar) de 128
+ADMUX |= (1<<REFS0); //aleferea tensiunii de ref
+ADCSRA |= (1<<ADEN); //activare ADC
+ADCSRA |= (1<<ADSC); //declansare start conversie
+}
 
-// uint16_t read_adc_light_sensor(uint8_t channel) //read ADC function for light sensor
-// // uint8_t is „a type of unsigned integer of length 8 bits”
-// {
-// ADMUX &= 0xF0; //setam input A0 pana la A5
-// ADMUX |= channel; //selectam pin A0 pana la A5
-// ADCSRA |= (1<<ADSC); //start conversie
-// while(ADCSRA&(1<<ADSC));//asteptam incheierea operatie de conversie
-// return ADC; //read and return
-// }
+uint16_t read_adc_light_sensor(uint8_t channel) //read ADC function for light sensor
+// uint8_t is „a type of unsigned integer of length 8 bits”
+{
+ADMUX &= 0xF0; //setam input A0 pana la A5
+ADMUX |= channel; //selectam pin A0 pana la A5
+ADCSRA |= (1<<ADSC); //start conversie
+while(ADCSRA&(1<<ADSC));//asteptam incheierea operatie de conversie
+return ADC; //read and return
+}
 
-// void init_timer_1(){
-//  //init registrii
-//  TCCR2A = 0;
-//  TCCR2B = 0;
-//  TCNT2 = 0;
+void init_timer_1(){
+ //init registrii
+ TCCR2A = 0;
+ TCCR2B = 0;
+ TCNT2 = 0;
  
-//   //setam valoarea de comparatie
-//  OCR2A=249;
-//  //setam bitul corespunzator modului de lucru CTC
-//  //TCCR-TIMER/COUNTER CONTROL REGISTER
-//  TCCR2A |= (1 << WGM21);
-//  //setam bitii coresp prentru prescaler-ul de 1024
-//  TCCR2B |=(1<<CS21) | (1<<CS20);
-// sei(); //permite intreruperi
-//  //setam bitul corespunzator pentru validarea  intreruperii 
-//  //TIMSK-TIMER INTERRUPT MASK REGISTER
-//  //OCIE2A-TIMER/COUNTER_N OUTPUT COMPARE MATCH INTERRUPT ENABLE
-//  TIMSK2 |= (1 << OCIE2A);
-// }
+  //setam valoarea de comparatie
+ OCR2A=249;
+ //setam bitul corespunzator modului de lucru CTC
+ //TCCR-TIMER/COUNTER CONTROL REGISTER
+ TCCR2A |= (1 << WGM21);
+ //setam bitii coresp prentru prescaler-ul de 1024
+ TCCR2B |=(1<<CS21) | (1<<CS20);
+sei(); //permite intreruperi
+ //setam bitul corespunzator pentru validarea  intreruperii
+ //TIMSK-TIMER INTERRUPT MASK REGISTER
+ //OCIE2A-TIMER/COUNTER_N OUTPUT COMPARE MATCH INTERRUPT ENABLE
+ TIMSK2 |= (1 << OCIE2A);
+}
 
-//  //tratam intreruperea
-//  ISR(TIMER2_COMPA_vect)
-// {
-// nr_timer++;
-// }
+ //tratam intreruperea
+ ISR(TIMER2_COMPA_vect)
+{
+nr_timer++;
+}
 
 // void setup()
 // {
-//  DDRB |= (1<<PB5) | (1<<PB0); //setam pinii pe output in registrul B
-//  init_timer_1();
-//  adc_init_light_sensor();
-//  vw_setup(3000);//setam viteza de comunicatie dintre placi (in baud)
-//  lcd.begin(16,2);
-//  lcd.clear();
-//  Serial.begin(9600);
+ DDRB |= (1<<PB5) | (1<<PB0); //setam pinii pe output in registrul B
+ init_timer_1();
+ adc_init_light_sensor();
+ vw_setup(3000);//setam viteza de comunicatie dintre placi (in baud)
+ Serial.begin(9600);
 // }
 
 // void loop()

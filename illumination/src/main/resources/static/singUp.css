@@ -100,3 +100,35 @@ button:hover {
 #chk:checked~.signup label {
 	transform: scale(.6);
 }
+
+.alert {
+	padding: 20px;
+	background-color: #f44336;
+	color: white;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.closebtn:hover {
+	color: black;
+}
+
+.error{
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url('https://i.imgur.com/GnyDvKN.png');
+	border: 1px solid;
+	margin: 0px 0px;
+	padding: 15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}

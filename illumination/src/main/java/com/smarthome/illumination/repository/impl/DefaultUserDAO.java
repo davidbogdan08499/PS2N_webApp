@@ -50,10 +50,11 @@ public class DefaultUserDAO implements UserDAO {
                 "FROM UserModel WHERE email= :mail", UserModel.class);
         typedQuery.setParameter("mail", mail);
         List<UserModel> list = typedQuery.getResultList();
-        if (list.size() != 0) {
-            return list.get(0);
-        }
-        return null;
+            if (list.size() != 0) {
+                return list.get(0);
+            }
+            return null;
+
     }
 
 }

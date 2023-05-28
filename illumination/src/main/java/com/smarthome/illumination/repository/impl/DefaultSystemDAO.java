@@ -2,11 +2,13 @@ package com.smarthome.illumination.repository.impl;
 
 import com.smarthome.illumination.constants.ConstantsVariables;
 import com.smarthome.illumination.exception.SystemAlreadyRegisteredException;
+import com.smarthome.illumination.exception.SystemNotAvailableException;
 import com.smarthome.illumination.exception.SystemRegisteredServiceException;
 import com.smarthome.illumination.repository.SystemsDAO;
 import com.smarthome.illumination.repository.model.SystemsModel;
 import com.smarthome.illumination.repository.model.UserModel;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
@@ -51,12 +53,16 @@ public class DefaultSystemDAO implements SystemsDAO {
     }
 
     @Override
-    public SystemsModel getSystemFromDataBase(int id) {
+    public SystemsModel getSystemFromDataBase(int id) throws SystemNotAvailableException {
         TypedQuery<SystemsModel> typedQuery=entityManager.createQuery(
                 "FROM SystemsModel WHERE  id= :id",SystemsModel.class);
         typedQuery.setParameter("id",id);
         List<SystemsModel>list=typedQuery.getResultList();
-        return list.get(0);
+        try{
+            return list.get(0);
+        }catch (IndexOutOfBoundsException exception){
+            throw new SystemNotAvailableException("System doesn't exist");
+        }
     }
 
     private boolean verifySystemExistance(int systemId) throws SystemAlreadyRegisteredException {
@@ -66,5 +72,16 @@ public class DefaultSystemDAO implements SystemsDAO {
         List<SystemsModel> list = typedQuery.getResultList();
         if (list.size() != 0) return true;
         return false;
+    }
+
+    @Transactional
+    @Override
+    public void setDataForChosenSystem(int systemID, String powerStatus) {
+        Query query = entityManager.createQuery(
+                "UPDATE SystemsModel SET systemStatus = :newStatus WHERE id= :givenID");
+
+        query.setParameter("newStatus",powerStatus);
+        query.setParameter("givenID",systemID);
+        query.executeUpdate();
     }
 }

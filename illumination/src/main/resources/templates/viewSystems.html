@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=IBM Plex Sans" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=IBM Plex Sans" rel="stylesheet" />
     <title>Your Systems Page</title>
 </head>
 
@@ -46,35 +46,44 @@
 
 </section>
 
+<div class="warning" th:if="${errorAddSystem}" align="center">
+    <p th:text="${errorAddSystem}"></p>
+</div>
 
 </body>
-<table align="center">
-    <th>
+<div class="table-container">
+    <table align="center">
+        <thead class="table-header">
         <tr>
-            <th bgcolor="white" align="center">Your registered systems</th>
+            <th bgcolor="white" align="center">Systems</th>
+            <th bgcolor="white" align="center">System ID</th>
         </tr>
-    </th>
-    <tbody>
-    <tr th:each="item :${currentUser.getSystemsModelList()}">
-        <td bgcolor="white">System ID:</td>
-        <td th:text="${item.getId()}" bgcolor="white"></td>
-        <td>
-            <a th:href="@{/selectedSystem(id=${item.getId()})}"><button  >Go to system</button></a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<p>
+        </thead>
+        <tbody>
+        <tr th:each="item :${currentUser.getSystemsModelList()}">
+            <td bgcolor="white">System ID:</td>
+            <td th:text="${item.getId()}" bgcolor="white"></td>
+            <td>
+                <a th:href="@{/selectedSystem(id=${item.getId()})}"><button>Go to system</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p>
+</div>
 
 
 </p>
 <div align="center">
     <form action="#" th:action="@{/addNewSystem}" th:object="${systemForm}" method="post">
-        <label aria-hidden="true"> Add a new System</label>
-        <input type="text" name="text" placeholder="System ID" th:field="*{id}" required="">
-        <input type="submit" value="Add new system">
+        <div class="new-system">
+            <label  class="text">System ID</label>
+            <input type="text" name="input" placeholder="Write here..." th:field="*{id}" required="" class="input">
+            <input type="submit" value="Add new system" class="submit-btn">
+        </div>
     </form>
 </div>
+
 </html>
 <!-- partial -->
 </body>

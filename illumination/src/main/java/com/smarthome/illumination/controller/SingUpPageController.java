@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -43,7 +44,11 @@ public class SingUpPageController {
     }
 
     @PostMapping(value = "/requestSingUp")
-    public String getHomePage(@ModelAttribute("registerForm") RegisterForm registerForm, Model model, HttpServletRequest httpServletRequest) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public String getHomePage(@ModelAttribute("registerForm") RegisterForm registerForm,
+                              Model model,
+                              HttpServletRequest httpServletRequest,
+                              RedirectAttributes redirectAttributes) throws NoSuchAlgorithmException, InvalidKeySpecException {
+
         model.addAttribute(registerForm);
         UserData userData;
         try {
@@ -54,8 +59,10 @@ public class SingUpPageController {
             systemsFacade.addSystem(registerForm.getSystemID(), userModel);
             return ConstantsVariables.REDIRECT + ConstantsVariables.HOME;
         } catch (FacadeException ex) {
+            redirectAttributes.addFlashAttribute("errorSingUp", ex.getMessage());
             return ConstantsVariables.REDIRECT + ConstantsVariables.SINGUPPAGE;
         }
+
     }
 }
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping
@@ -42,18 +43,21 @@ public class ViewSystemsPageController {
     }
 
     @PostMapping("/addNewSystem")
-    public String addNewSystem(HttpServletRequest httpServletRequest, Model model, @ModelAttribute("systemForm") SystemForm systemForm) {
+    public String addNewSystem(HttpServletRequest httpServletRequest,
+                               Model model, @ModelAttribute("systemForm") SystemForm systemForm
+            , RedirectAttributes redirectAttributes) {
         UserData currentUser = (UserData) httpServletRequest.getSession().getAttribute("currentUser");
         if (currentUser == null) {
             return ConstantsVariables.REDIRECT + ConstantsVariables.SINGUPPAGE;
         }
         try {
             systemsFacade.addSystem(systemForm.getId(), userFacade.getUserFromDataBase(currentUser));
-            currentUser = userFacade.getUserDataFromUserModel(userFacade.getUserFromDataBase(currentUser));
-            httpServletRequest.getSession().setAttribute("currentUser", currentUser);
+            userFacade.updateUserFromCurrentSession(httpServletRequest);
             return ConstantsVariables.REDIRECT + ConstantsVariables.VIEWSYSTEMS;
         } catch (FacadeException ex) {
-            return ConstantsVariables.REDIRECT + ConstantsVariables.HOME;
+            redirectAttributes.addFlashAttribute("errorAddSystem", ex.getMessage());
+            return ConstantsVariables.REDIRECT + ConstantsVariables.VIEWSYSTEMS;
+
         }
     }
 

@@ -10,6 +10,8 @@ public class ControlSystemForm {
 
     private String startDate;
 
+    private int systemId;
+
     public String getStatus() {
         return status;
     }
@@ -24,5 +26,13 @@ public class ControlSystemForm {
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
+    }
+
+    public int getSystemId() {
+        return systemId;
+    }
+
+    public void setSystemId(int systemId) {
+        this.systemId = systemId;
     }
 }

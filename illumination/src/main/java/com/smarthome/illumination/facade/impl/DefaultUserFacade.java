@@ -10,6 +10,7 @@ import com.smarthome.illumination.forms.LoginForm;
 import com.smarthome.illumination.forms.RegisterForm;
 import com.smarthome.illumination.repository.model.UserModel;
 import com.smarthome.illumination.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 import java.security.NoSuchAlgorithmException;
@@ -32,7 +33,7 @@ public class DefaultUserFacade implements UserFacade {
             userModelRegisterForm = userService.getUserModelFromRegisterForm(registerForm);
             userService.createUser(userModelRegisterForm);
         } catch (UserAvailableServiceException exception) {
-            throw new FacadeException("User exists!");
+            throw new FacadeException(exception.getMessage());
         }
         return verify;
     }
@@ -54,11 +55,31 @@ public class DefaultUserFacade implements UserFacade {
 
     @Override
     public UserData verifyUser(LoginForm loginForm) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        return userService.verifyUserFromLogin(loginForm.getMail(), loginForm.getPassword());
+       try {
+           return userService.verifyUserFromLogin(loginForm.getMail(), loginForm.getPassword());
+       }catch (UserNotAvailableServiceException exception){
+           throw new FacadeException(exception.getMessage());
+       }
     }
 
     @Override
     public UserData getUserDataFromUserModel(UserModel userModel) {
         return userService.getUserDataFromUserModel(userModel);
+    }
+
+    @Override
+    public UserData getUserFromCurrentSession(HttpServletRequest httpServletRequest) {
+        return (UserData) httpServletRequest.getSession().getAttribute("currentUser");
+    }
+
+    @Override
+    public void updateUserFromCurrentSession(HttpServletRequest httpServletRequest) {
+        UserData userData=(UserData) httpServletRequest.getSession().getAttribute("currentUser");
+        httpServletRequest.getSession().setAttribute("currentUser",updateCurrentUserFromSession(userData));
+    }
+
+
+    private UserData updateCurrentUserFromSession(UserData userData) {
+        return getUserDataFromUserModel(getUserFromDataBase(userData));
     }
 }

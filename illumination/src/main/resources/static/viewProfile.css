@@ -11,7 +11,7 @@
 }
 
 body {
-   /*  background: #573b8a; */
+    /*  background: #573b8a; */
     height: 1200px;
     margin: 0;
     padding: 0;
@@ -19,6 +19,56 @@ body {
     padding-top: 100px;
 
 }
+
+/* table */
+
+.table-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+table {
+    width: 400px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+th {
+    text-align: left;
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+tbody td {
+    position: relative;
+}
+
+tbody td:hover:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -9999px;
+    bottom: -9999px;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: -1;
+}
+
+
+/*  */
+
 
 .navbar {
     display: flex;
@@ -51,7 +101,7 @@ body {
     transition: .4s ease-in;
 }
 
-.paragraph{
+.paragraph {
     font-family: 'Jost', sans-serif;
     font-size: 20px;
     font-weight: 600;
@@ -119,7 +169,7 @@ button:active {
 
 /* button {
      width: 130%;
-    height: 200%; 
+    height: 200%;
     margin: 10px auto;
     justify-content: center;
     display: block;
@@ -134,7 +184,7 @@ button:active {
     transition: .4s ease-in;
     cursor: pointer;
   }
-  
+
   button:hover {
     background: #6d44b8;
   } */
@@ -147,7 +197,7 @@ button:active {
     padding-bottom: 30px;
     padding-top: 15px;
   }
-  
+
   .articles {
     background-color: white;
     height: 100vh;
@@ -165,32 +215,32 @@ button:active {
     font-size: 14px;
     font-weight: 600;
   }
-  
+
   .listed-articles {
     display: flex;
     justify-content: center;
     flex-direction: row;
     gap: 30px;
   }
-  
+
   .article-desc {
     font-size: 22px;
     font-weight: 700;
     padding-top: 20px;
   }
-  
+
   .date {
     font-size: 14px;
     font-weight: 400;
     padding-top: 15px;
   }
-  
+
   .article img:hover,
   .article-desc:hover,
   .navbar li:hover {
     cursor: pointer;
   }
-  
+
   .start-trial:hover {
     cursor: pointer;
     opacity: 0.6;

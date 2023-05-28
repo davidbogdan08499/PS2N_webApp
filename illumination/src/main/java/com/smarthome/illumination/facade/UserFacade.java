@@ -7,6 +7,7 @@ import com.smarthome.illumination.facade.data.UserData;
 import com.smarthome.illumination.forms.LoginForm;
 import com.smarthome.illumination.forms.RegisterForm;
 import com.smarthome.illumination.repository.model.UserModel;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -30,5 +31,9 @@ public interface UserFacade {
     UserData verifyUser(LoginForm loginForm) throws InvalidKeySpecException, NoSuchAlgorithmException;
 
     UserData getUserDataFromUserModel(UserModel userModel);
+
+    UserData getUserFromCurrentSession(HttpServletRequest httpServletRequest);
+
+    void updateUserFromCurrentSession(HttpServletRequest httpServletRequest);
 
 }

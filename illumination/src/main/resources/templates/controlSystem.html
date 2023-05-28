@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Control System Page</title>
-    <link rel="stylesheet" th:href="@{/controlSystem.css}">
-
+    <link rel="stylesheet" href="controlSystem.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=IBM Plex Sans" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=IBM Plex Sans" rel="stylesheet" />
     <title>Profile Page</title>
 </head>
 
@@ -44,60 +44,93 @@
     <div class="title"> Chosen System Controls
     </div>
 
+    <form action="#" th:action="@{/requestControlSystem}" th:object="${controlSystemForm}" method="post">
+        <div class="radio-input" >
+            <input type="radio" id="value-1" name="value-radio" value="1" checked="checked" th:field="${controlSystemForm.status}"  >
+            <label style="color:green;" for="value-1">ON</label>
+            <input type="radio" id="value-2" name="value-radio" value="0" th:field="${controlSystemForm.status}">
+            <label style="color:red;" for="value-2">OFF</label>
+            <input type="submit" name="Submit">
+        </div>
+    </form>
 </section>
+
+<div class="table-container">
     <table align="center">
+        <thead class="table-header">
         <tr>
             <th align="center" bgcolor="white">Types of room illumination status</th>
+            <th align="center" bgcolor="white">Value</th>
         </tr>
+        </thead>
         <tr>
             <td bgcolor="white" align="center">Dark:</td>
-            <td bgcolor="white" align="center"><p>1000-1500</p></td>
+            <td bgcolor="white" align="center">
+                <p>1000-1500</p>
+            </td>
         </tr>
         <tr>
             <td bgcolor="white" align="center">Medium Light:</td>
-            <td bgcolor="white" align="center"><p>100-999</p></td>
+            <td bgcolor="white" align="center">
+                <p>100-999</p>
+            </td>
         </tr>
         <tr>
             <td bgcolor="white" align="center">Light:</td>
-            <td bgcolor="white" align="center"><p>0-99</p></td>
+            <td bgcolor="white" align="center">
+                <p>0-99</p>
+            </td>
         </tr>
     </table>
+</div>
 <p>
 </p>
-<table align="center">
-    <tr>
-        <th align="center" bgcolor="white">Status of the selected system:</th>
-    </tr>
-    <tr>
-        <td bgcolor="white" align="center">System ID:</td>
-        <td bgcolor="white" align="center"><p th:text="${currentSystem.getId()}"></td>
-    </tr>
-    <tr>
-        <td bgcolor="white" align="center">System ON/OFF:</td>
-        <td bgcolor="white" align="center"><p th:text="${currentSystem.getStatus()}"></td>
-    </tr>
-    <tr>
-        <td bgcolor="white" align="center">System light value:</td>
-        <td bgcolor="white" align="center"><p th:text="${currentSystem.getLight()}"></td>
-    </tr>
+<div class="table-container">
+    <table align="center">
+        <thead class="table-header">
+        <tr>
+            <th align="center" bgcolor="white">Status of the selected system:</th>
+            <th align="center" bgcolor="white">Value</th>
+        </tr>
+        </thead>
+        <tr>
+            <td bgcolor="white" align="center">System ID:</td>
+            <td bgcolor="white" align="center">
+                <p th:text="${currentSystem.getId()}">
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="white" align="center">System ON/OFF:</td>
+            <td bgcolor="white" align="center">
+                <p th:text="${currentSystem.getStatus()}">
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="white" align="center">System light value:</td>
+            <td id="lightStatus" bgcolor="white" align="center" onmousemove="loadLightData()">
+                <p th:text="${currentSystem.getLight()}">
+            </td>
+        </tr>
 
-    <tr>
-        <td bgcolor="white" align="center">System start date:</td>
-        <td bgcolor="white" align="center"><p th:text="${currentSystem.getStartDate()}"></td>
-    </tr>
-</table>
+        <tr>
+            <td bgcolor="white" align="center">System start date:</td>
+            <td bgcolor="white" align="center">
+                <p th:text="${currentSystem.getStartDate()}">
+            </td>
+        </tr>
+    </table>
+</div>
 
-<form action="#" th:action="@{/requestControlSystem}" th:object="${controlSystemForm}" method="post">
-<label>Turn:</label>
-    <input type="checkbox" th:text="ON" th:value="1" th:field="${controlSystemForm.status}">
-    <input type="checkbox" th:text="OFF" th:value="0" th:field="${controlSystemForm.status}">
-    <input type="submit" name="Submit">
-</form>
+
 </body>
 
 </html>
 <!-- partial -->
-
+<script>
+    function loadLightData(){
+       location.reload();
+    }
+</script>
 </body>
 
 </html>

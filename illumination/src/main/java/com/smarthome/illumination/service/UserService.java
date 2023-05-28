@@ -20,7 +20,7 @@ public interface UserService {
 
    UserModel getUserFromDataBase(UserData userData);
 
-   UserData verifyUserFromLogin(String mail,String password) throws InvalidKeySpecException, NoSuchAlgorithmException;
+   UserData verifyUserFromLogin(String mail,String password) throws InvalidKeySpecException, NoSuchAlgorithmException, UserNotAvailableServiceException;
 
 
 
